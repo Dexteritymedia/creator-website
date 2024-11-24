@@ -1,0 +1,165 @@
+{% extends 'header.html' %}
+{% load static %}
+
+{% block page_content %}
+<div class="container space-y-8">
+    <div class="text-center">
+        <h1 class="title">Mood Matrix</h1>
+        <p class="subtitle">How are you feeling today?</p>
+    </div>
+
+    <div class="card">
+        <div class="space-y-4">
+            <div class="slider-container">
+                <svg class="slider-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 6H19C20.1046 6 21 6.89543 21 8V16C21 17.1046 20.1046 18 19 18H5C3.89543 18 3 17.1046 3 16V8C3 6.89543 3.89543 6 5 6Z"/>
+                    <path d="M7 10V14"/>
+                    <path d="M11 10V14"/>
+                    <path d="M15 10V14"/>
+                </svg>
+                <div class="slider-content">
+                    <label class="slider-label">Energy Level</label>
+                    <input type="range" id="energy" value="50" min="0" max="100">
+                    <div class="slider-labels">
+                        <span>Tired</span>
+                        <span>Energetic</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other sliders remain the same as in previous HTML -->
+            
+        </div>
+    </div>
+
+    <div id="suggestion-card" class="card suggestion-card">
+        <h2 class="title">Perfect for your mood</h2>
+        <div id="activities-container" class="space-y-4">
+            <!-- Activities will be inserted here -->
+        </div>
+    </div>
+</div>
+
+{% block extra_css %}
+<style>
+    /* All the CSS from previous version */
+    /* Additional styles for category badges */
+    .category-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        background-color: #e5e7eb;
+        color: #374151;
+        margin-left: 0.5rem;
+    }
+    
+    .location-text {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-top: 0.25rem;
+    }
+    
+    .duration-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.875rem;
+        color: #6b7280;
+    }
+</style>
+{% endblock extra_css %}
+
+{% block extra_js %}
+<script>
+    const state = {
+        energy: 50,
+        stress: 50,
+        time: 60,
+        budget: 30
+    };
+
+    function getBackgroundColor(value) {
+        if (value < 33) return '#dbeafe';
+        if (value < 66) return '#bfdbfe';
+        return '#93c5fd';
+    }
+
+    function updateSuggestions() {
+        const suggestionCard = document.getElementById('suggestion-card');
+        const activitiesContainer = document.getElementById('activities-container');
+        
+        // Show loading state
+        activitiesContainer.innerHTML = '<div class="text-center">Finding perfect activities...</div>';
+        
+        // Get CSRF token
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        
+        // Make API request to Django backend
+        fetch(`/get-suggestions/?energy=${state.energy}&stress=${state.stress}&time=${state.time}&budget=${state.budget}`, {
+            headers: {
+                'X-CSRFToken': csrftoken
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                suggestionCard.style.backgroundColor = getBackgroundColor(state.energy);
+                
+                let activitiesHtml = data.activities.map(activity => `
+                    <div class="activity-item">
+                        <div>
+                            <div class="flex items-center">
+                                <span class="font-bold">${activity.name}</span>
+                                <span class="category-badge">${activity.category}</span>
+                            </div>
+                            <div class="location-text">${activity.location}</div>
+                            <div class="duration-badge">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                ${activity.duration} min
+                            </div>
+                        </div>
+                        <span class="blue-text">$${activity.price}</span>
+                    </div>
+                `).join('');
+
+                const total = data.activities.reduce((sum, act) => sum + act.price, 0);
+                
+                activitiesHtml += `
+                    <div class="total-row">
+                        <span class="font-bold">Total</span>
+                        <span class="font-bold blue-text">$${total.toFixed(2)}</span>
+                    </div>
+                `;
+
+                activitiesContainer.innerHTML = activitiesHtml;
+            } else {
+                activitiesContainer.innerHTML = '<div class="text-center text-red-600">Error loading suggestions</div>';
+            }
+        })
+        .catch(error => {
+            activitiesContainer.innerHTML = '<div class="text-center text-red-600">Error loading suggestions</div>';
+            console.error('Error:', error);
+        });
+    }
+
+    // Add event listeners to all range inputs
+    ['energy', 'stress', 'time', 'budget'].forEach(id => {
+        const input = document.getElementById(id);
+        input.addEventListener('input', (e) => {
+            state[id] = parseInt(e.target.value);
+            updateSuggestions();
+        });
+    });
+
+    // Initial render
+    updateSuggestions();
+</script>
+{% endblock extra_js %}
+
+
+{% endblock page_content %}

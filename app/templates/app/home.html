@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoverGenius AI - Create stunning Kindle covers instantly</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/daisyui/4.4.19/full.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar bg-base-100 fixed top-0 z-50 shadow-lg">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <label tabindex="0" class="btn btn-ghost lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+                    </svg>
+                </label>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <a class="btn btn-ghost normal-case text-xl">
+                <i class="fas fa-book-open mr-2"></i>CoverGenius AI
+            </a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="navbar-end">
+            <a class="btn btn-ghost">Login</a>
+            <a class="btn btn-primary">Get Started</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero min-h-screen bg-base-200 pt-16">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+            <img src="/api/placeholder/600/400" class="max-w-sm rounded-lg shadow-2xl" alt="AI Cover Demo"/>
+            <div>
+                <h1 class="text-5xl font-bold">Create Professional Kindle Covers with AI</h1>
+                <p class="py-6">Generate stunning book covers in seconds using our advanced AI. Perfect for self-published authors and professional publishers.</p>
+                <div class="space-x-4">
+                    <button class="btn btn-primary">Try for Free</button>
+                    <button class="btn btn-outline">Watch Demo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">Why Choose CoverGenius AI?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fas fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3 class="card-title">AI-Powered Design</h3>
+                        <p>Generate unique covers based on your book's genre, mood, and description.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fas fa-sliders"></i>
+                        </div>
+                        <h3 class="card-title">Customizable Templates</h3>
+                        <p>Fine-tune your covers with our easy-to-use editor and pre-made templates.</p>
+                    </div>
+                </div>
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h3 class="card-title">Kindle-Ready Export</h3>
+                        <p>Download your covers in the perfect format for Kindle publishing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-base-200">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">Simple, Transparent Pricing</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <h3 class="card-title text-2xl">Starter</h3>
+                        <div class="text-4xl font-bold my-4">$9<span class="text-lg font-normal">/month</span></div>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                10 Covers/month
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                Basic Templates
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary mr-2"></i>
+                                Standard Support
+                            </li>
+                        </ul>
+                        <div class="card-actions">
+                            <button class="btn btn-outline btn-primary btn-block">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-primary text-primary-content shadow-xl">
+                    <div class="card-body">
+                        <h3 class="card-title text-2xl">Professional</h3>
+                        <div class="text-4xl font-bold my-4">$29<span class="text-lg font-normal">/month</span></div>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2"></i>
+                                Unlimited Covers
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2"></i>
+                                Premium Templates
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check mr-2"></i>
+                                Priority Support
+                            </li>
+                        </ul>
+                        <div class="card-actions">
+                            <button class="btn btn-secondary btn-block">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Image Gallery Section -->
+    <section class="py-20 bg-base-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">Featured Book Covers</h2>
+            
+            <!-- Carousel Container -->
+            <div class="relative">
+                <!-- Scroll Buttons -->
+                <button class="btn btn-circle btn-primary absolute left-0 top-1/2 transform -translate-y-1/2 z-10" onclick="document.getElementById('gallery-scroll').scrollBy({left: -300, behavior: 'smooth'})">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="btn btn-circle btn-primary absolute right-0 top-1/2 transform -translate-y-1/2 z-10" onclick="document.getElementById('gallery-scroll').scrollBy({left: 300, behavior: 'smooth'})">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Scrollable Gallery -->
+                <div id="gallery-scroll" class="flex overflow-x-auto gap-4 py-8 px-12 snap-x scrollbar-hide" style="scroll-behavior: smooth;">
+                    <!-- Individual Images -->
+                    <div class="flex-none w-64 snap-center">
+                        <div class="card bg-base-100 shadow-xl">
+                            <figure class="px-4 pt-4">
+                                <img src="/api/placeholder/250/350" alt="Book Cover 1" class="rounded-xl shadow-lg" />
+                            </figure>
+                            <div class="card-body p-4">
+                                <h3 class="card-title text-sm">Fantasy Novel Cover</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-none w-64 snap-center">
+                        <div class="card bg-base-100 shadow-xl">
+                            <figure class="px-4 pt-4">
+                                <img src="/api/placeholder/250/350" alt="Book Cover 2" class="rounded-xl shadow-lg" />
+                            </figure>
+                            <div class="card-body p-4">
+                                <h3 class="card-title text-sm">Mystery Thriller Cover</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-none w-64 snap-center">
+                        <div class="card bg-base-100 shadow-xl">
+                            <figure class="px-4 pt-4">
+                                <img src="/api/placeholder/250/350" alt="Book Cover 3" class="rounded-xl shadow-lg" />
+                            </figure>
+                            <div class="card-body p-4">
+                                <h3 class="card-title text-sm">Romance Novel Cover</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-none w-64 snap-center">
+                        <div class="card bg-base-100 shadow-xl">
+                            <figure class="px-4 pt-4">
+                                <img src="/api/placeholder/250/350" alt="Book Cover 4" class="rounded-xl shadow-lg" />
+                            </figure>
+                            <div class="card-body p-4">
+                                <h3 class="card-title text-sm">Sci-Fi Cover</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-none w-64 snap-center">
+                        <div class="card bg-base-100 shadow-xl">
+                            <figure class="px-4 pt-4">
+                                <img src="/api/placeholder/250/350" alt="Book Cover 5" class="rounded-xl shadow-lg" />
+                            </figure>
+                            <div class="card-body p-4">
+                                <h3 class="card-title text-sm">Non-Fiction Cover</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+	
+	<section class="py-20 bg-base-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">Featured Book Covers</h2>
+            
+            <div class="relative">
+                <!-- Carousel Wrapper -->
+                <div class="carousel carousel-center w-full p-4 space-x-4 rounded-box">
+                    <!-- Carousel Item 1 -->
+                    <div id="slide1" class="carousel-item w-72">
+                        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
+                            <figure class="relative">
+                                <img src="/api/placeholder/300/400" alt="Dragon's Reign" class="w-full h-96 object-cover" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-neutral-900/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="absolute bottom-0 p-4 text-white">
+                                        <p class="font-semibold">Fantasy Novel</p>
+                                        <p class="text-sm opacity-75">Epic dragon adventure</p>
+                                    </div>
+                                </div>
+                            </figure>
+                            <div class="card-body p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="card-title text-lg">Dragon's Reign</h3>
+                                    <span class="badge badge-primary">Fantasy</span>
+                                </div>
+                                <div class="card-actions justify-end mt-2">
+                                    <button class="btn btn-ghost btn-sm">Preview</button>
+                                    <button class="btn btn-primary btn-sm">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Item 2 -->
+                    <div id="slide2" class="carousel-item w-72">
+                        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
+                            <figure class="relative">
+                                <img src="/api/placeholder/300/400" alt="Night Watch" class="w-full h-96 object-cover" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-neutral-900/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="absolute bottom-0 p-4 text-white">
+                                        <p class="font-semibold">Mystery Thriller</p>
+                                        <p class="text-sm opacity-75">Dark city mysteries</p>
+                                    </div>
+                                </div>
+                            </figure>
+                            <div class="card-body p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="card-title text-lg">Night Watch</h3>
+                                    <span class="badge badge-secondary">Thriller</span>
+                                </div>
+                                <div class="card-actions justify-end mt-2">
+                                    <button class="btn btn-ghost btn-sm">Preview</button>
+                                    <button class="btn btn-primary btn-sm">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Item 3 -->
+                    <div id="slide3" class="carousel-item w-72">
+                        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
+                            <figure class="relative">
+                                <img src="/api/placeholder/300/400" alt="Summer Hearts" class="w-full h-96 object-cover" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-neutral-900/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="absolute bottom-0 p-4 text-white">
+                                        <p class="font-semibold">Romance</p>
+                                        <p class="text-sm opacity-75">Summer love story</p>
+                                    </div>
+                                </div>
+                            </figure>
+                            <div class="card-body p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="card-title text-lg">Summer Hearts</h3>
+                                    <span class="badge badge-accent">Romance</span>
+                                </div>
+                                <div class="card-actions justify-end mt-2">
+                                    <button class="btn btn-ghost btn-sm">Preview</button>
+                                    <button class="btn btn-primary btn-sm">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Item 4 -->
+                    <div id="slide4" class="carousel-item w-72">
+                        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
+                            <figure class="relative">
+                                <img src="/api/placeholder/300/400" alt="Star Voyager" class="w-full h-96 object-cover" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-neutral-900/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="absolute bottom-0 p-4 text-white">
+                                        <p class="font-semibold">Sci-Fi</p>
+                                        <p class="text-sm opacity-75">Space exploration</p>
+                                    </div>
+                                </div>
+                            </figure>
+                            <div class="card-body p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="card-title text-lg">Star Voyager</h3>
+                                    <span class="badge badge-info">Sci-Fi</span>
+                                </div>
+                                <div class="card-actions justify-end mt-2">
+                                    <button class="btn btn-ghost btn-sm">Preview</button>
+                                    <button class="btn btn-primary btn-sm">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Item 5 -->
+                    <div id="slide5" class="carousel-item w-72">
+                        <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
+                            <figure class="relative">
+                                <img src="/api/placeholder/300/400" alt="Growth Mindset" class="w-full h-96 object-cover" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-neutral-900/70 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="absolute bottom-0 p-4 text-white">
+                                        <p class="font-semibold">Non-Fiction</p>
+                                        <p class="text-sm opacity-75">Personal development</p>
+                                    </div>
+                                </div>
+                            </figure>
+                            <div class="card-body p-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="card-title text-lg">Growth Mindset</h3>
+                                    <span class="badge badge-neutral">Self-Help</span>
+                                </div>
+                                <div class="card-actions justify-end mt-2">
+                                    <button class="btn btn-ghost btn-sm">Preview</button>
+                                    <button class="btn btn-primary btn-sm">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="absolute flex justify-between transform -translate-y-1/2 left-2 right-2 top-1/2">
+                    <button class="btn btn-circle btn-ghost" onclick="document.querySelector('.carousel').scrollBy({left: -288, behavior: 'smooth'})">
+                        <i class="fas fa-chevron-left text-xl"></i>
+                    </button>
+                    <button class="btn btn-circle btn-ghost" onclick="document.querySelector('.carousel').scrollBy({left: 288, behavior: 'smooth'})">
+                        <i class="fas fa-chevron-right text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Carousel Navigation Dots -->
+            <div class="flex justify-center w-full py-4 gap-2">
+                <button class="btn btn-xs btn-circle" onclick="document.getElementById('slide1').scrollIntoView({behavior: 'smooth'})"></button>
+                <button class="btn btn-xs btn-circle" onclick="document.getElementById('slide2').scrollIntoView({behavior: 'smooth'})"></button>
+                <button class="btn btn-xs btn-circle" onclick="document.getElementById('slide3').scrollIntoView({behavior: 'smooth'})"></button>
+                <button class="btn btn-xs btn-circle" onclick="document.getElementById('slide4').scrollIntoView({behavior: 'smooth'})"></button>
+                <button class="btn btn-xs btn-circle" onclick="document.getElementById('slide5').scrollIntoView({behavior: 'smooth'})"></button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Scroll to the third slide on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('slide3').scrollIntoView({behavior: 'smooth'});
+            }, 100);
+        });
+    </script>
+
+    <style>
+        /* Hide scrollbar but keep functionality */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+	
+<!-- Footer -->
+    <footer class="footer p-10 bg-neutral text-neutral-content">
+        <div>
+            <span class="footer-title">Company</span> 
+            <a class="link link-hover">About us</a>
+            <a class="link link-hover">Contact</a>
+            <a class="link link-hover">Jobs</a>
+        </div> 
+        <div>
+            <span class="footer-title">Legal</span> 
+            <a class="link link-hover">Terms of use</a>
+            <a class="link link-hover">Privacy policy</a>
+            <a class="link link-hover">Cookie policy</a>
+        </div>
+        <div>
+            <span class="footer-title">Social</span> 
+            <div class="grid grid-flow-col gap-4">
+                <a><i class="fab fa-twitter text-2xl"></i></a>
+                <a><i class="fab fa-youtube text-2xl"></i></a>
+                <a><i class="fab fa-facebook text-2xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content">
+        <div>
+            <p>Copyright © 2024 - All rights reserved by CoverGenius AI</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+

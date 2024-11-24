@@ -1,0 +1,374 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .review-section {
+            padding: 2rem;
+            overflow: hidden;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .review-container {
+            display: flex;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .review-container.scroll-left {
+            animation: scrollLeft 50s linear infinite;
+        }
+
+        .review-container.scroll-right {
+            animation: scrollRight 50s linear infinite;
+        }
+
+        .review-container:hover {
+            animation-play-state: paused;
+        }
+
+        .review-card {
+            flex: 0 0 300px;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            margin-right: 1rem;
+        }
+
+        .user-name {
+            font-weight: bold;
+			color: black;
+        }
+
+        .rating {
+            color: #ffd700;
+            margin: 0.5rem 0;
+        }
+
+        .review-text {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        @keyframes scrollLeft {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-300px * 6 - 2rem * 6));
+            }
+        }
+
+        @keyframes scrollRight {
+            0% {
+                transform: translateX(calc(-300px * 6 - 2rem * 6));
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+		
+		/* Glowing subscribe button animation */
+    .subscribe-btn {
+        animation: pulse 2s infinite;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .subscribe-btn::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(236, 72, 153, 0.3), transparent);
+        transform: rotate(45deg);
+        animation: shine 3s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    @keyframes shine {
+        0% { transform: translateX(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) rotate(45deg); }
+    }
+    
+    /* Counter animation styling */
+    .counter-value {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.5s forwards;
+    }
+    
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 0;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 3;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .control-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+        /* Hide scrollbar but keep functionality */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+		
+    /* Previous styles remain the same */
+    
+    /* Pink button styling */
+    .btn-primary {
+        background-color: #ec4899 !important;
+        border-color: #ec4899 !important;
+    }
+    
+    .btn-primary:hover {
+        background-color: #db2777 !important;
+        border-color: #db2777 !important;
+    }
+    
+    /* Zigzag decoration */
+.zigzag-header {
+        position: relative;
+        padding-bottom: 2.5rem;
+        margin-bottom: 3rem;
+    }
+    
+    .zigzag-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        height: 30px;
+        background: none;
+    }
+    
+    .zigzag-line {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+    }
+    
+    .zigzag-path {
+        fill: none;
+        stroke: #ec4899;
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        animation: drawZigzag 2s ease forwards;
+    }
+    
+    @keyframes drawZigzag {
+        to {
+            stroke-dashoffset: 0;
+        }
+    }
+	
+	.admin-link {
+        position: fixed;
+        bottom: 2rem;
+        left: 2rem;
+        z-index: 1000;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #ec4899;
+        color: white;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+    }
+    
+    /* Theme toggle button */
+    .theme-toggle {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 1000;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #ec4899;
+        color: white;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+    }
+    
+    .theme-toggle:hover {
+        transform: scale(1.1);
+    }
+    
+    .theme-toggle svg {
+        width: 24px;
+        height: 24px;
+    }
+	.loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .loading-dots {
+      display: flex;
+      animation: loading 1s infinite ease-in-out;
+    }
+
+    .loading-dots span {
+      width: 10px;
+      height: 10px;
+      background-color: #333;
+      border-radius: 50%;
+      margin: 0 5px;
+      animation: bounce 1s infinite ease-in-out;
+    }
+
+    .loading-dots span:first-child {
+      animation-delay: -0.32s;
+    }
+
+    .loading-dots span:last-child {
+      animation-delay: -0.16s;
+    }
+
+    @keyframes loading {
+      0% { transform: translateX(-30px); }
+      50% { transform: translateX(30px); }
+      100% { transform: translateX(-30px); }
+    }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0.6); }
+      40% { transform: scale(1.0); }
+    }
+	
+	/* New animation styles */
+        .perk-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .perk-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Add transition delay for cascading effect */
+        .perk-card:nth-child(1) { transition-delay: 0.1s; }
+        .perk-card:nth-child(2) { transition-delay: 0.2s; }
+        .perk-card:nth-child(3) { transition-delay: 0.3s; }
+        .perk-card:nth-child(4) { transition-delay: 0.4s; }
+        .perk-card:nth-child(5) { transition-delay: 0.5s; }
+        .perk-card:nth-child(6) { transition-delay: 0.6s; }
+        .perk-card:nth-child(7) { transition-delay: 0.7s; }
+        .perk-card:nth-child(8) { transition-delay: 0.8s; }

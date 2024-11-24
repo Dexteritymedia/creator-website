@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/daisyui/4.4.19/full.css" rel="stylesheet">
+    <title>Creator Name - Content Creator</title>
+    <style>
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 0;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 3;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .control-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section with Video -->
+    <div class="video-container">
+        <video class="video-background" id="heroVideo" autoplay muted loop playsinline>
+            <!-- Replace these with your actual video sources -->
+            <source src="{% static 'videos/PflKuuTkp6o.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+        <div class="content-wrapper">
+            <div class="text-center text-white">
+                <h1 class="mb-5 text-5xl font-bold">Creator Name</h1>
+                <p class="mb-5">Content Creator | Influencer | Digital Artist</p>
+                <button class="btn btn-primary">Subscribe Now</button>
+            </div>
+        </div>
+        <div class="video-controls">
+            <button class="control-btn" id="muteBtn" title="Mute/Unmute">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 0 1 0 7.07M19 12a9 9 0 0 1-1.5 5"/>
+                </svg>
+            </button>
+            <button class="control-btn" id="pauseBtn" title="Play/Pause">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6zm8 0h4v16h-4z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="bg-base-200 py-12">
+        <div class="container mx-auto px-4">
+            <div class="stats shadow w-full">
+                <div class="stat place-items-center">
+                    <div class="stat-title">Subscribers</div>
+                    <div class="stat-value">100K+</div>
+                    <div class="stat-desc">From January 2024</div>
+                </div>
+                <div class="stat place-items-center">
+                    <div class="stat-title">Total Views</div>
+                    <div class="stat-value text-primary">1M+</div>
+                    <div class="stat-desc text-primary">↗︎ 400 (22%)</div>
+                </div>
+                <div class="stat place-items-center">
+                    <div class="stat-title">Engagement</div>
+                    <div class="stat-value">15%</div>
+                    <div class="stat-desc">↗︎ Above Average</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Latest Content Section -->
+    <div class="container mx-auto px-4 py-12">
+        <h2 class="text-3xl font-bold text-center mb-8">Latest Content</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Content Card 1 -->
+            <div class="card bg-base-100 shadow-xl">
+                <figure><img src="/api/placeholder/400/225" alt="Content 1" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Latest Video Title</h2>
+                    <p>Description of the amazing content that viewers will find in this video.</p>
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-primary">Watch Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Content Card 2 -->
+            <div class="card bg-base-100 shadow-xl">
+                <figure><img src="/api/placeholder/400/225" alt="Content 2" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Featured Series</h2>
+                    <p>An exciting series that keeps viewers coming back for more.</p>
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-primary">Watch Series</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Content Card 3 -->
+            <div class="card bg-base-100 shadow-xl">
+                <figure><img src="/api/placeholder/400/225" alt="Content 3" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">Special Project</h2>
+                    <p>A unique collaboration or special project that showcases creativity.</p>
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-primary">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="bg-base-200 py-12">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+            <div class="join join-vertical w-full">
+                <div class="collapse collapse-arrow join-item border border-base-300">
+                    <input type="radio" name="my-accordion-4" checked="checked" /> 
+                    <div class="collapse-title text-xl font-medium">
+                        What type of content do you create?
+                    </div>
+                    <div class="collapse-content">
+                        <p>I create engaging content focused on [your niche], including tutorials, reviews, and entertainment videos that help my audience learn and grow.</p>
+                    </div>
+                </div>
+                <div class="collapse collapse-arrow join-item border border-base-300">
+                    <input type="radio" name="my-accordion-4" />
+                    <div class="collapse-title text-xl font-medium">
+                        How often do you post new content?
+                    </div>
+                    <div class="collapse-content">
+                        <p>I post new content three times a week: Mondays, Wednesdays, and Fridays. Special content and live streams are announced on my social media.</p>
+                    </div>
+                </div>
+                <div class="collapse collapse-arrow join-item border border-base-300">
+                    <input type="radio" name="my-accordion-4" />
+                    <div class="collapse-title text-xl font-medium">
+                        How can I collaborate with you?
+                    </div>
+                    <div class="collapse-content">
+                        <p>For collaboration inquiries, please reach out through the contact form below or email me at contact@example.com</p>
+                    </div>
+                </div>
+                <div class="collapse collapse-arrow join-item border border-base-300">
+                    <input type="radio" name="my-accordion-4" />
+                    <div class="collapse-title text-xl font-medium">
+                        Do you offer merchandise?
+                    </div>
+                    <div class="collapse-content">
+                        <p>Yes! My merchandise store is updated regularly with new designs. Check out the store link in the navigation menu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="card bg-base-100 shadow-xl max-w-2xl mx-auto">
+            <div class="card-body">
+                <h2 class="card-title text-2xl font-bold mb-4">Get in Touch</h2>
+                <form class="space-y-4">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Name</span>
+                        </label>
+                        <input type="text" placeholder="Your name" class="input input-bordered w-full" />
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Email</span>
+                        </label>
+                        <input type="email" placeholder="your@email.com" class="input input-bordered w-full" />
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Message</span>
+                        </label>
+                        <textarea class="textarea textarea-bordered h-24" placeholder="Your message"></textarea>
+                    </div>
+                    <div class="form-control mt-6">
+                        <button class="btn btn-primary">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer footer-center p-10 bg-primary text-primary-content">
+        <div>
+            <h3 class="text-2xl font-bold">Creator Name</h3>
+            <p>Content Creator since 2020</p>
+            <p>Copyright © 2024 - All rights reserved</p>
+        </div>
+        <div>
+            <div class="grid grid-flow-col gap-4">
+                <a class="link link-hover">Twitter</a>
+                <a class="link link-hover">Instagram</a>
+                <a class="link link-hover">YouTube</a>
+                <a class="link link-hover">TikTok</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('heroVideo');
+            const muteBtn = document.getElementById('muteBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            
+            // Handle mute/unmute
+            muteBtn.addEventListener('click', function() {
+                if (video.muted) {
+                    video.muted = false;
+                    muteBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 0 1 0 7.07M19 12a9 9 0 0 1-1.5 5"/>
+                        </svg>`;
+                } else {
+                    video.muted = true;
+                    muteBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
+                        </svg>`;
+                }
+            });
+
+            // Handle play/pause
+            pauseBtn.addEventListener('click', function() {
+                if (video.paused) {
+                    video.play();
+                    pauseBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M6 4h4v16H6zm8 0h4v16h-4z"/>
+                        </svg>`;
+                } else {
+                    video.pause();
+                    pauseBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>`;
+                }
+            });
+
+            // Ensure video plays on mobile devices
+            video.play().catch(function(error) {
+                console.log("Video autoplay failed:", error);
+            });
+        });
+    </script>
+
+    <!-- Rest of your content goes here -->
+
+</body>
+</html>

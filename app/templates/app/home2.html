@@ -1,0 +1,504 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust Adventures - Travel Guide</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/daisyui/4.4.19/full.css" rel="stylesheet">
+	<style>
+        .category-item {
+            transition: all 0.3s ease;
+        }
+        .category-item.active {
+            color: #1a1a1a;
+            border-color: #1a1a1a;
+        }
+        .category-item:not(.active) {
+            color: #666;
+            border-color: transparent;
+        }
+        .navbar-scroll {
+            transition: all 0.3s ease-in-out;
+        }
+        .scroll-container {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        .scroll-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+    </style>
+</head>
+<body class="bg-base-100">
+    
+	
+	<div class="drawer">
+        <div class="drawer-content">
+            <!-- Main content -->
+            <div class="mt-16">
+                <!-- New Search Section -->
+                <div class="p-4 mb-12">
+                    <div class="max-w-6xl mx-auto">
+                        <!-- Categories Scroll -->
+                        <div class="scroll-container overflow-x-auto mb-6">
+                            <div class="flex space-x-8 p-2">
+                                <button class="category-item flex flex-col items-center space-y-2 pb-2 border-b-2 active" data-placeholder="Where to?">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                    </svg>
+                                    <span>Search All</span>
+                                </button>
+                                <button class="category-item flex flex-col items-center space-y-2 pb-2 border-b-2" data-placeholder="Find your perfect stay">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                        <polyline points="9 22 9 12 15 12 15 22"/>
+                                    </svg>
+                                    <span>Hotels</span>
+                                </button>
+                                <button class="category-item flex flex-col items-center space-y-2 pb-2 border-b-2" data-placeholder="Discover experiences">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="3 7 9 4 15 7 21 4 21 17 15 20 9 17 3 20"/>
+                                        <line x1="9" y1="4" x2="9" y2="17"/>
+                                        <line x1="15" y1="7" x2="15" y2="20"/>
+                                    </svg>
+                                    <span>Things to do</span>
+                                </button>
+                                <button class="category-item flex flex-col items-center space-y-2 pb-2 border-b-2" data-placeholder="Search restaurants">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
+                                        <path d="M7 2v20"/>
+                                        <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
+                                    </svg>
+                                    <span>Restaurants</span>
+                                </button>
+                                <button class="category-item flex flex-col items-center space-y-2 pb-2 border-b-2" data-placeholder="Find flights">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                                    </svg>
+                                    <span>Flights</span>
+                                </button>
+                                <button class="category-item flex flex-col items-center space-y-2 pb-2 border-b-2" data-placeholder="Plan your vacation">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 20c1.306-2.182 3-4 7-4s5.818 1.818 7 4"/>
+                                        <path d="M21 14c-1.306-2.182-3-4-7-4s-5.818 1.818-7 4"/>
+                                        <path d="M21 8c-1.306-2.182-3-4-7-4S8.182 5.818 7 8"/>
+                                    </svg>
+                                    <span>Vacation</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Search Bar -->
+                        <div class="relative">
+                            <div class="flex">
+                                <div class="relative flex-1">
+                                    <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                    </svg>
+                                    <input 
+                                        type="text" 
+                                        id="searchInput"
+                                        class="input input-bordered w-full pl-12 pr-4 h-14 text-lg" 
+                                        placeholder="Where to?"
+                                    />
+                                </div>
+                                <button class="btn btn-primary h-14 ml-2 px-8">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero min-h-screen" style="background-image: url('{% static 'images/chelsea.png' %}'); background-size: cover; background-position: center;">
+        <div class="hero-overlay bg-opacity-60"></div>
+        <div class="hero-content text-center text-neutral-content">
+            <div class="max-w-xl">
+                <h1 class="mb-8 text-6xl font-bold">Discover Your Next Adventure</h1>
+                <p class="mb-8 text-xl">Join me as we explore the world's most beautiful destinations, hidden gems, and unforgettable experiences.</p>
+                <div class="join w-full max-w-md mx-auto">
+                    <input class="input input-bordered join-item w-4/5" placeholder="Search destinations..."/>
+                    <button class="btn btn-primary join-item w-1/5">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="drawer">
+        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+        
+        <!-- Page content -->
+        <div class="drawer-content">
+            <!-- Navbar -->
+            <div id="navbar" class="navbar bg-base-100 fixed top-0 z-50 navbar-scroll">
+                <div class="flex-none">
+                    <label for="my-drawer" class="btn btn-square btn-ghost">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </label>
+                </div>
+                
+                <!-- Default navbar content -->
+                <div id="default-nav" class="flex-1 flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                        LOGO
+                    </div>
+                    <a class="btn btn-ghost normal-case text-xl ml-2">My Website</a>
+                </div>
+				
+				<div class="navbar-end gap-2">
+            <!-- Theme Toggle Button -->
+            <label class="swap swap-rotate">
+                <!-- Hidden checkbox to control the state -->
+                <input type="checkbox" onclick="toggleTheme()" class="theme-controller" />
+                
+                <!-- sun icon -->
+                <svg class="swap-on fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/>
+                </svg>
+                
+                <!-- moon icon -->
+                <svg class="swap-off fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/>
+                </svg>
+            </label>
+            <a class="btn btn-primary text-white">Subscribe</a>
+        </div>
+		
+                <!-- Scroll navbar content (hidden by default) -->
+                <div id="scroll-nav" class="flex-1 items-center hidden">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                        LOGO
+                    </div>
+                    <div class="flex-1 mx-4">
+                        <div class="form-control w-full">
+                            <input type="text" placeholder="Search" class="input input-bordered w-full" />
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">Subscribe</button>
+                </div>
+            </div>
+            
+            <!-- Main content -->
+            <div class="p-4 mt-16">
+                <h1 class="text-2xl font-bold mb-8">Featured Content</h1>
+
+                <!-- First Image Section - Text Overlay -->
+                <div class="mb-12">
+                    <h2 class="text-xl font-semibold mb-4">Trending Now</h2>
+                    <div class="scroll-container overflow-x-auto">
+                        <div class="flex space-x-4 p-2">
+                            <!-- Image Cards with Overlay -->
+                            <div class="relative flex-none w-72 h-48">
+                                <img src="/api/placeholder/400/320" alt="Featured 1" class="w-full h-full object-cover rounded-lg" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-lg">
+                                    <div class="absolute bottom-4 left-4 text-white">
+                                        <h3 class="font-bold">Mountain Adventure</h3>
+                                        <p class="text-sm">Explore the heights</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="relative flex-none w-72 h-48">
+                                <img src="/api/placeholder/400/320" alt="Featured 2" class="w-full h-full object-cover rounded-lg" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-lg">
+                                    <div class="absolute bottom-4 left-4 text-white">
+                                        <h3 class="font-bold">Ocean Retreat</h3>
+                                        <p class="text-sm">Dive into serenity</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="relative flex-none w-72 h-48">
+                                <img src="/api/placeholder/400/320" alt="Featured 3" class="w-full h-full object-cover rounded-lg" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-lg">
+                                    <div class="absolute bottom-4 left-4 text-white">
+                                        <h3 class="font-bold">Forest Escape</h3>
+                                        <p class="text-sm">Nature's embrace</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="relative flex-none w-72 h-48">
+                                <img src="/api/placeholder/400/320" alt="Featured 4" class="w-full h-full object-cover rounded-lg" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-lg">
+                                    <div class="absolute bottom-4 left-4 text-white">
+                                        <h3 class="font-bold">Desert Safari</h3>
+                                        <p class="text-sm">Adventure awaits</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Second Image Section - Reviews Below -->
+                <div class="mb-12">
+                    <h2 class="text-xl font-semibold mb-4">Top Rated</h2>
+                    <div class="scroll-container overflow-x-auto">
+                        <div class="flex space-x-6 p-2">
+                            <!-- Image Cards with Reviews -->
+                            <div class="flex-none w-72">
+                                <div class="rounded-lg overflow-hidden">
+                                    <img src="/api/placeholder/400/320" alt="Review 1" class="w-full h-48 object-cover" />
+                                </div>
+                                <div class="mt-3">
+                                    <h3 class="font-bold">Sunset Resort</h3>
+                                    <div class="flex items-center mt-1">
+                                        <div class="rating rating-sm">
+                                            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" />
+                                        </div>
+                                        <span class="text-sm text-gray-500 ml-2">4.0 (128 reviews)</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mt-2">"Amazing views and excellent service. Would definitely recommend!"</p>
+                                </div>
+                            </div>
+
+                            <div class="flex-none w-72">
+                                <div class="rounded-lg overflow-hidden">
+                                    <img src="/api/placeholder/400/320" alt="Review 2" class="w-full h-48 object-cover" />
+                                </div>
+                                <div class="mt-3">
+                                    <h3 class="font-bold">Mountain Lodge</h3>
+                                    <div class="flex items-center mt-1">
+                                        <div class="rating rating-sm">
+                                            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+                                        </div>
+                                        <span class="text-sm text-gray-500 ml-2">5.0 (89 reviews)</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mt-2">"Perfect getaway location with breathtaking scenery!"</p>
+                                </div>
+                            </div>
+
+                            <div class="flex-none w-72">
+                                <div class="rounded-lg overflow-hidden">
+                                    <img src="/api/placeholder/400/320" alt="Review 3" class="w-full h-48 object-cover" />
+                                </div>
+                                <div class="mt-3">
+                                    <h3 class="font-bold">Beach House</h3>
+                                    <div class="flex items-center mt-1">
+                                        <div class="rating rating-sm">
+                                            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" />
+                                        </div>
+                                        <span class="text-sm text-gray-500 ml-2">4.0 (156 reviews)</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mt-2">"Peaceful location with direct access to the beach!"</p>
+                                </div>
+                            </div>
+
+                            <div class="flex-none w-72">
+                                <div class="rounded-lg overflow-hidden">
+                                    <img src="/api/placeholder/400/320" alt="Review 4" class="w-full h-48 object-cover" />
+                                </div>
+                                <div class="mt-3">
+                                    <h3 class="font-bold">City Loft</h3>
+                                    <div class="flex items-center mt-1">
+                                        <div class="rating rating-sm">
+                                            <input type="radio" name="rating-4" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-4" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-4" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-4" class="mask mask-star-2 bg-orange-400" checked />
+                                            <input type="radio" name="rating-4" class="mask mask-star-2 bg-orange-400" checked />
+                                        </div>
+                                        <span class="text-sm text-gray-500 ml-2">5.0 (92 reviews)</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mt-2">"Modern, clean, and perfectly located in the heart of the city!"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar content -->
+        <div class="drawer-side">
+            <label for="my-drawer" class="drawer-overlay"></label>
+            <ul class="menu p-4 w-3/4 h-full bg-base-200 text-base-content">
+                <li><a class="text-xl">Home</a></li>
+                <li><a class="text-xl">About</a></li>
+                <li><a class="text-xl">Services</a></li>
+                <li><a class="text-xl">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Featured Destinations -->
+    <div class="container mx-auto py-24 px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Popular Destinations</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Destination Card 1 -->
+            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <figure class="px-4 pt-4">
+                    <img src="/api/placeholder/600/400" alt="Bali" class="rounded-xl h-64 w-full object-cover" />
+                </figure>
+                <div class="card-body">
+                    <h2 class="card-title text-2xl">
+                        Bali, Indonesia
+                        <div class="badge badge-secondary">New</div>
+                    </h2>
+                    <p class="text-base-content/70">Experience the magic of Bali's beaches, temples, and vibrant culture.</p>
+                    <div class="card-actions justify-between items-center mt-4">
+                        <div class="rating rating-md">
+                            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" />
+                        </div>
+                        <button class="btn btn-primary">Read More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Destination Card 2 -->
+            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <figure class="px-4 pt-4">
+                    <img src="/api/placeholder/600/400" alt="Santorini" class="rounded-xl h-64 w-full object-cover" />
+                </figure>
+                <div class="card-body">
+                    <h2 class="card-title text-2xl">
+                        Santorini, Greece
+                        <div class="badge badge-primary">Popular</div>
+                    </h2>
+                    <p class="text-base-content/70">Discover the white-washed buildings and stunning sunsets of Santorini.</p>
+                    <div class="card-actions justify-between items-center mt-4">
+                        <div class="rating rating-md">
+                            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" checked />
+                        </div>
+                        <button class="btn btn-primary">Read More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Destination Card 3 -->
+            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <figure class="px-4 pt-4">
+                    <img src="/api/placeholder/600/400" alt="Tokyo" class="rounded-xl h-64 w-full object-cover" />
+                </figure>
+                <div class="card-body">
+                    <h2 class="card-title text-2xl">
+                        Tokyo, Japan
+                        <div class="badge badge-accent">Trending</div>
+                    </h2>
+                    <p class="text-base-content/70">Explore the perfect blend of tradition and modernity in Tokyo.</p>
+                    <div class="card-actions justify-between items-center mt-4">
+                        <div class="rating rating-md">
+                            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" checked />
+                            <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" />
+                        </div>
+                        <button class="btn btn-primary">Read More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <div class="bg-base-200 py-24">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-6">Stay Updated</h2>
+                <p class="text-xl mb-8 text-base-content/70">Subscribe to receive the latest travel guides and exclusive content!</p>
+                <div class="join w-full max-w-md mx-auto">
+                    <input type="email" placeholder="Enter your email" class="input input-bordered join-item w-4/5" />
+                    <button class="btn btn-primary join-item w-1/5">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer p-10 bg-neutral text-neutral-content">
+        <div>
+            <span class="footer-title opacity-100 text-lg">Services</span> 
+            <a class="link link-hover text-base">Travel Guides</a>
+            <a class="link link-hover text-base">Photography</a>
+            <a class="link link-hover text-base">Travel Tips</a>
+            <a class="link link-hover text-base">Itineraries</a>
+        </div> 
+        <div>
+            <span class="footer-title opacity-100 text-lg">Company</span> 
+            <a class="link link-hover text-base">About</a>
+            <a class="link link-hover text-base">Contact</a>
+            <a class="link link-hover text-base">Press kit</a>
+        </div> 
+        <div>
+            <span class="footer-title opacity-100 text-lg">Legal</span> 
+            <a class="link link-hover text-base">Terms of use</a>
+            <a class="link link-hover text-base">Privacy policy</a>
+            <a class="link link-hover text-base">Cookie policy</a>
+        </div>
+    </footer>
+	
+	<script>
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const defaultNav = document.getElementById('default-nav');
+            const scrollNav = document.getElementById('scroll-nav');
+            
+            if (window.scrollY > 100) {
+                defaultNav.classList.add('hidden');
+                scrollNav.classList.remove('hidden');
+                scrollNav.classList.add('flex');
+                navbar.classList.add('shadow-lg');
+            } else {
+                defaultNav.classList.remove('hidden');
+                scrollNav.classList.add('hidden');
+                scrollNav.classList.remove('flex');
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+	
+	<script>
+        // Handle category selection
+        const categories = document.querySelectorAll('.category-item');
+        const searchInput = document.getElementById('searchInput');
+
+        categories.forEach(category => {
+            category.addEventListener('click', () => {
+                // Remove active class from all categories
+                categories.forEach(cat => cat.classList.remove('active'));
+                
+                // Add active class to clicked category
+                category.classList.add('active');
+                
+                // Update search placeholder
+                searchInput.placeholder = category.dataset.placeholder;
+            });
+        });
+    </script>
+	
+</body>
+</html>
+

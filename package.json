@@ -1,0 +1,23 @@
+{
+	"scripts": {
+		"build:css": "postcss static/src/tailwindcss.css -o static/css/tailwindcss.css",
+		"dev": "npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch"
+	},
+	"name": "wordguess",
+	"version": "1.0.0",
+	"main": "index.js",
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"autoprefixer": "^10.4.20",
+		"postcss": "^8.4.49",
+		"tailwindcss": "^3.4.14"
+	},
+	"devDependencies": {
+		"@tailwindcss/forms": "^0.5.9",
+		"@tailwindcss/typography": "^0.5.15",
+		"daisyui": "^4.12.14"
+	},
+	"description": ""
+}

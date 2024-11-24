@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced Title Search</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .filter-section {
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+        .filter-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .filter-header .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        .filter-header .toggle-icon.rotated {
+            transform: rotate(180deg);
+        }
+        .filter-content {
+            display: none;
+            padding: 15px;
+        }
+        .filter-content.active {
+            display: block;
+        }
+        .genre-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .genre-checkboxes label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .language-container, .country-input-container {
+            width: 100%;
+        }
+        .language-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .language-btn {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .language-btn.selected {
+            background-color: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+        .country-input-container {
+            position: relative;
+        }
+        #countryInput {
+            width: 100%;
+        }
+        #countryDropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            z-index: 10;
+            display: none;
+        }
+        #countryDropdown.show {
+            display: block;
+        }
+        .country-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .country-item:hover {
+            background-color: #f0f0f0;
+        }
+        .selected-countries {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .selected-country {
+            background-color: #0066cc;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .selected-country .remove-country {
+            margin-left: 5px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: bold;
+        }
+        .search-actions {
+            display: none;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .search-actions.show {
+            display: flex;
+        }
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: #0066cc;
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        #resultsContainer {
+            margin-top: 20px;
+        }
+        .result-item {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <div class="search-header">
+            <h2>Advanced Title Search</h2>
+        </div>
+        
+        <!-- Title Type Section -->
+        <div class="filter-section">
+            <div class="filter-header" onclick="toggleSection(this)">
+                <h3>Title Type</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="filter-content">
+                <select id="titleType" multiple>
+                    <option value="movie">Movie</option>
+                    <option value="tvSeries">TV Series</option>
+                    <option value="documentary">Documentary</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Release Year Section -->
+        <div class="filter-section">
+            <div class="filter-header" onclick="toggleSection(this)">
+                <h3>Release Year</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="filter-content">
+                <div>
+                    <label>From Year</label>
+                    <input type="number" id="yearFrom" placeholder="From Year" min="1900" max="2024">
+                </div>
+                <div>
+                    <label>To Year</label>
+                    <input type="number" id="yearTo" placeholder="To Year" min="1900" max="2024">
+                </div>
+            </div>
+        </div>
+
+        <!-- Genre Section -->
+        <div class="filter-section">
+            <div class="filter-header" onclick="toggleSection(this)">
+                <h3>Genre</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="filter-content">
+                <div class="genre-checkboxes" id="genreCheckboxes">
+                    <label><input type="checkbox" value="action"> Action</label>
+                    <label><input type="checkbox" value="comedy"> Comedy</label>
+                    <label><input type="checkbox" value="drama"> Drama</label>
+                    <label><input type="checkbox" value="horror"> Horror</label>
+                    <label><input type="checkbox" value="scifi"> Sci-Fi</label>
+                    <label><input type="checkbox" value="romance"> Romance</label>
+                    <label><input type="checkbox" value="thriller"> Thriller</label>
+                    <label><input type="checkbox" value="adventure"> Adventure</label>
+                    <label><input type="checkbox" value="fantasy"> Fantasy</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rating Section -->
+        <div class="filter-section">
+            <div class="filter-header" onclick="toggleSection(this)">
+                <h3>Rating</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="filter-content">
+                <select id="rating">
+                    <option value="">Any Rating</option>
+                    <option value="7">7+ Stars</option>
+                    <option value="8">8+ Stars</option>
+                    <option value="9">9+ Stars</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Language Section -->
+        <div class="filter-section">
+            <div class="filter-header" onclick="toggleSection(this)">
+                <h3>Language</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="filter-content">
+                <div id="languageButtons" class="language-container">
+                    <button class="language-btn" data-lang="en">English</button>
+                    <button class="language-btn" data-lang="es">Spanish</button>
+                    <button class="language-btn" data-lang="fr">French</button>
+                    <button class="language-btn" data-lang="de">German</button>
+                    <button class="language-btn" data-lang="ja">Japanese</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Country Section -->
+        <div class="filter-section">
+            <div class="filter-header" onclick="toggleSection(this)">
+                <h3>Country</h3>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="filter-content">
+                <div class="country-input-container">
+                    <input type="text" id="countryInput" placeholder="Search Countries">
+                    <div id="countryDropdown"></div>
+                    <div id="selectedCountries" class="selected-countries"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="searchActions" class="search-actions">
+            <button id="searchButton" class="btn btn-primary" onclick="performSearch()">Search</button>
+            <button class="btn btn-secondary" onclick="resetFilters()">Reset</button>
+        </div>
+        
+        <div id="resultsContainer"></div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            content.classList.toggle('active');
+            icon.classList.toggle('rotated');
+        }
+
+        function checkSearchButtonVisibility() {
+            const searchActions = document.getElementById('searchActions');
+            const titleTypeSelections = Array.from(document.getElementById('titleType').selectedOptions).length;
+            const yearFrom = document.getElementById('yearFrom').value;
+            const yearTo = document.getElementById('yearTo').value;
+            const selectedGenres = Array.from(document.querySelectorAll('#genreCheckboxes input:checked')).length;
+            const selectedRating = document.getElementById('rating').value;
+            const selectedLanguages = Array.from(document.querySelectorAll('.language-btn.selected')).length;
+            const selectedCountries = document.querySelectorAll('.selected-country').length;
+
+            if (titleTypeSelections > 0 || 
+                yearFrom || yearTo || 
+                selectedGenres > 0 || 
+                selectedRating || 
+                selectedLanguages > 0 || 
+                selectedCountries > 0) {
+                searchActions.classList.add('show');
+            } else {
+                searchActions.classList.remove('show');
+            }
+        }
+
+        // Add event listeners for checkSearchButtonVisibility
+        document.getElementById('titleType').addEventListener('change', checkSearchButtonVisibility);
+        document.getElementById('yearFrom').addEventListener('input', checkSearchButtonVisibility);
+        document.getElementById('yearTo').addEventListener('input', checkSearchButtonVisibility);
+        document.getElementById('genreCheckboxes').addEventListener('change', checkSearchButtonVisibility);
+        document.getElementById('rating').addEventListener('change', checkSearchButtonVisibility);
+
+        // Language selection logic
+        document.getElementById('languageButtons').addEventListener('click', function(event) {
+            if (event.target.classList.contains('language-btn')) {
+                event.target.classList.toggle('selected');
+                checkSearchButtonVisibility();
+            }
+        });
+
+        // Country data and selection logic
+        const countries = [
+            {code: 'US', name: 'United States'},
+            {code: 'GB', name: 'United Kingdom'},
+            {code: 'CA', name: 'Canada'},
+            {code: 'FR', name: 'France'},
+            {code: 'DE', name: 'Germany'},
+            {code: 'JP', name: 'Japan'},
+            {code: 'KR', name: 'South Korea'},
+            {code: 'IN', name: 'India'},
+            {code: 'AU', name: 'Australia'},
+            {code: 'BR', name: 'Brazil'}
+        ];
+
+        const countryInput = document.getElementById('countryInput');
+        const countryDropdown = document.getElementById('countryDropdown');
+        const selectedCountriesContainer = document.getElementById('selectedCountries');
+        const selectedCountries = new Set();
+
+        countryInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const filteredCountries = countries.filter(country => 
+                country.name.toLowerCase().includes(searchTerm)
+            );
+
+            countryDropdown.innerHTML = filteredCountries.map(country => 
+                `<div class="country-item" data-code="${country.code}">${country.name}</div>`
+            ).join('');
+            countryDropdown.classList.add('show');
+        });
+
+        countryDropdown.addEventListener('click', function(event) {
+            const selectedCountry = event.target.closest('.country-item');
+            if (selectedCountry) {
+                const countryCode = selectedCountry.dataset.code;
+                const countryName = selectedCountry.textContent;
+
+                if (!selectedCountries.has(countryCode)) {
+                    selectedCountries.add(countryCode);
+                    selectedCountriesContainer.innerHTML += `
+                        <div class="selected-country" data-code="${countryCode}">
+                            ${countryName} 
+                            <span class="remove-country">×</span>
+                        </div>
+                    `;
+                    checkSearchButtonVisibility();
+                }
+
+                countryInput.value = '';
+                countryDropdown.classList.remove('show');
+            }
+        });
+
+        selectedCountriesContainer.addEventListener('click', function(event) {
+            const removeButton = event.target.closest('.remove-country');
+            if (removeButton) {
+                const countryElement = removeButton.closest('.selected-country');
+                const countryCode = countryElement.dataset.code;
+                selectedCountries.delete(countryCode);
+                countryElement.remove();
+                checkSearchButtonVisibility();
+            }
+        });
+
+        function performSearch() {
+            const titleTypes = Array.from(document.getElementById('titleType').selectedOptions).map(opt => opt.value);
+            const yearFrom = document.getElementById('yearFrom').value;
+            const yearTo = document.getElementById('yearTo').value;
+            
+            const selectedGenres = Array.from(document.querySelectorAll('#genreCheckboxes input:checked'))
+                .map(checkbox => checkbox.value);
+            
+            const rating = document.getElementById('rating').value;
+            const languages = getSelectedLanguages();
+            const countries = Array.from(selectedCountries);
+
+            const results = generateMockResults({
+                titleTypes, 
+                yearFrom, 
+                yearTo, 
+                genres: selectedGenres, 
+                rating, 
+                languages, 
+                countries
+            });
+
+            displayResults(results);
+        }
+
+        function getSelectedLanguages() {
+            const languageButtons = document.querySelectorAll('.language-btn.selected');
+            return Array.from(languageButtons).map(btn => btn.dataset.lang);
+        }
+
+                function generateMockResults(filters) {
+            const mockTitles = [
+                {title: "Inception", year: 2010, genre: "scifi", rating: 8.8, type: "movie", language: "en", country: "US"},
+                {title: "Breaking Bad", year: 2008, genre: "drama", rating: 9.5, type: "tvSeries", language: "en", country: "US"},
+                {title: "Parasita", year: 2019, genre: "drama", rating: 8.6, type: "movie", language: "ja", country: "KR"},
+                // ... (more mock data)
+            ];
+
+            return mockTitles.filter(title => {
+                const matchesTitleType = filters.titleTypes.length === 0 || filters.titleTypes.includes(title.type);
+                const matchesYear = 
+                    (!filters.yearFrom || title.year >= parseInt(filters.yearFrom)) &&
+                    (!filters.yearTo || title.year <= parseInt(filters.yearTo));
+                const matchesGenre = filters.genres.length === 0 || filters.genres.includes(title.genre);
+                const matchesRating = !filters.rating || title.rating >= parseFloat(filters.rating);
+                const matchesLanguage = filters.languages.length === 0 || filters.languages.includes(title.language);
+                const matchesCountry = filters.countries.length === 0 || filters.countries.includes(title.country);
+
+                return matchesTitleType && matchesYear && matchesGenre && 
+                       matchesRating && matchesLanguage && matchesCountry;
+            });
+        }
+
+               function displayResults(results) {
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = results.length > 0 
+                ? results.map(result => 
+                    `<div class="result-item">
+                        <h3>${result.title}</h3>
+                        <p>Year: ${result.year} | Genre: ${result.genre} | Rating: ${result.rating} | Language: ${result.language} | Country: ${result.country}</p>
+                    </div>`
+                ).join('')
+                : '<p>No results found.</p>';
+        }
+
+        function resetFilters() {
+            // Reset Title Type
+            document.getElementById('titleType').selectedIndex = -1;
+
+            // Reset Year
+            document.getElementById('yearFrom').value = '';
+            document.getElementById('yearTo').value = '';
+
+            // Reset Genres
+            document.querySelectorAll('#genreCheckboxes input:checked').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Reset Rating
+            document.getElementById('rating').selectedIndex = 0;
+
+            // Reset Languages
+            document.querySelectorAll('.language-btn.selected').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+
+            // Reset Countries
+            selectedCountries.clear();
+            document.getElementById('selectedCountries').innerHTML = '';
+            document.getElementById('countryInput').value = '';
+
+            // Hide search actions
+            document.getElementById('searchActions').classList.remove('show');
+            document.getElementById('resultsContainer').innerHTML = '';
+        }
+
+        document.addEventListener('click', function(event) {
+            // Close country dropdown if clicked outside
+            if (!countryDropdown.contains(event.target) && event.target !== countryInput) {
+                countryDropdown.classList.remove('show');
+            }
+        });
+    </script>

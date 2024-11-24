@@ -1,0 +1,102 @@
+{% extends 'header.html' %}
+
+{% load static %}
+
+{% block page_content %}
+<div class="container text-center">
+	<h1 class="text-4xl font-bold mb-12 text-pink-500 font-semibold mb-2">Activities within your Budget</h1>
+	<p>Total Budget: {{form.cleaned_data.budget}}</p>
+	<p>Total cost of Selected Activities: {{total_cost}}</p>
+</div>
+
+{% if accommodation_activities %}
+	<h3>Accommodation/Hotels</h3>
+	<section class="py-10">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-pink-400 zigzag-header">Latest Content
+				<svg class="zigzag-line" viewBox="0 0 200 20" preserveAspectRatio="xMidYMid meet">
+					<path class="zigzag-path" d="M0,10 L20,2 L40,10 L60,2 L80,10 L100,2 L120,10 L140,2 L160,10 L180,2 L200,10"/>
+				</svg>
+			</h2>
+            
+            <!-- Carousel Container -->
+            <div class="relative">
+                <!-- Scroll Buttons -->
+                <button class="btn btn-circle btn-primary absolute left-0 top-1/2 transform -translate-y-1/2 z-10" onclick="document.getElementById('gallery-scroll').scrollBy({left: -300, behavior: 'smooth'})">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="btn btn-circle btn-primary absolute right-0 top-1/2 transform -translate-y-1/2 z-10" onclick="document.getElementById('gallery-scroll').scrollBy({left: 300, behavior: 'smooth'})">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <div id="gallery-scroll" class="flex overflow-x-auto gap-4 py-8 px-12 snap-x scrollbar-hide" style="scroll-behavior: smooth;">
+					{% for activity in accommodation_activities %}
+							<div class="flex-none w-64 snap-center">
+								<div class="card shadow-xl">
+								{% if activity.pic %}
+									<figure class="px-4 pt-4">
+										<img src="{{activity.pic.url}}" alt="Book Cover 1" class="rounded-xl shadow-lg" />
+									</figure>
+								{% else %}
+									<figure class="px-4 pt-4">
+										<img src="{% static 'images/placeholder.png' %}" alt="Book Cover 1" class="rounded-xl shadow-lg" />
+									</figure>
+								{% endif %}
+									<div class="card-body p-4">
+										<h3 class="card-title text-sm">{{activity.name}}</h3>
+										<p>{{activity.description}}</p>
+										<div class="card-actions justify-end">
+											<button class="btn btn-primary">{{activity.cost}}</button>
+										</div>
+									</div>
+								</div>
+							</div>
+					{% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+	
+{% elif activities %}
+
+    <section class="py-10">
+      <div class=" p-6">
+		<div class="container mx-auto py-14 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Destination Card 1 -->
+			{% for activity in activities %}
+				<div class="card shadow-xl hover:shadow-2xl transition-shadow duration-300 perk-card">
+								{% if activity.pic %}
+									<figure class="px-4 pt-4">
+										<img src="{{activity.pic.url}}" alt="Book Cover 1" class="rounded-xl shadow-lg" />
+									</figure>
+								{% else %}
+									<figure class="px-4 pt-4">
+										<img src="{% static 'images/placeholder.png' %}" alt="Book Cover 1" class="rounded-xl shadow-lg" />
+									</figure>
+								{% endif %}
+									<div class="card-body p-4">
+										<h3 class="card-title text-2xl">{{activity.name}}</h3>
+										<p>{{activity.description}}</p>
+										<div class="text-4xl card-actions">
+											<button class="btn btn-primary">{{activity.cost}}</button>
+										</div>
+									</div>
+								</div>
+			{% endfor %}
+        </div>
+    </div>
+      </div>
+    </div>
+  </section>
+	
+{% else %}
+	<p>No Activities found within your budget.</p>
+{% endif %}
+
+{% if user.is_authenticated %}
+	<button type="submit" name="save" class="btn btn-success">Save Budget</button>
+	<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="btn btn-primary">Share on Facebook</a>
+  {% endif %}
+
+{% endblock page_content %}

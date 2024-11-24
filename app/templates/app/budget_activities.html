@@ -1,0 +1,46 @@
+{% extends 'header.html' %}
+
+{% load static %}
+
+{% block page_content %}
+<div class="container">
+<h1>Activities within your Budget</h1>
+<p>Total Budget: {{form.cleaned_data.budget}}</p>
+<p>Total cost of Selected Activities: {{total_cost}}</p>
+
+
+<div class="container">
+<div class="row my-3 mb-5 row-cols-1 row-cols-2 g-4">
+
+{% if activities %}
+	{% for activity in activities %}
+<div class="col-sm-3">
+  <div class="shadow bg-body rounded">
+    <div class="card text-center">
+		<img class="card-img" src="{% static 'images/header.jpg' %}" alt="A sample image"/>
+      <div class="card-body" style="color: #fff;">
+	
+        <h1 class="card-title">{{activity.name}}</h1>
+		<h2 style="font-size: 20px;"></h2>
+		<p>Cost: {{activity.cost}}</p>
+	<p>Category: {{activity.category.name}}</p>
+		<h4 class="card-title m-5">{{activity.description}}</h4>
+      </div>
+    </div>
+    </div>
+ </div>
+	{% endfor %}
+
+{% else %}
+	<p>No Activities found within your budget.</p>
+{% endif %}
+</div>
+</div>
+
+{% if user.is_authenticated %}
+	<button type="submit" name="save" class="btn btn-success">Save Budget</button>
+	<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="btn btn-primary">Share on Facebook</a>
+  {% endif %}
+  
+</div>
+{% endblock page_content %}

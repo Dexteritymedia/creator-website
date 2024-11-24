@@ -1,0 +1,268 @@
+{% extends 'header.html' %}
+
+{% load static %}
+
+{% block page_content %}
+
+{% if content.video %}
+    <!-- Hero Section with Video -->
+    <div class="video-container">
+        <video class="video-background" id="heroVideo" autoplay muted loop playsinline>
+            <!-- Replace these with your actual video sources -->
+            <source src="{{content.video.url}}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+        <div class="content-wrapper">
+            <div class="text-center text-white">
+                <h1 class="mb-5 text-5xl font-bold">{{content.creator}}</h1>
+                <div class="mb-5">{{content.tagline|safe}}</div>
+                {% if content.instagram_link %}<a href="{{content.instagram_link}}" class="btn btn-primary subscribe-btn">Subscribe Now</a>{% else %}<a href="{{content.youtube_link}}" class="btn btn-primary subscribe-btn">Watch Now</a>{% endif %}
+            </div>
+        </div>
+        <div class="video-controls">
+            <button class="control-btn" id="muteBtn" title="Mute/Unmute">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 0 1 0 7.07M19 12a9 9 0 0 1-1.5 5"/>
+                </svg>
+            </button>
+            <button class="control-btn" id="pauseBtn" title="Play/Pause">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6zm8 0h4v16h-4z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+{% else %}
+	<div class="hero min-h-[60vh]" style="background-image: url('{{content.image.url}}');">
+        <div class="hero-overlay bg-opacity-60"></div>
+        <div class="hero-content text-center text-neutral-content">
+            <div class="max-w-md">
+                <h1 class="mb-5 text-5xl font-bold">{{content.creator}}</h1>
+                <p class="mb-5">{{content.tagline|safe}}</p>
+                <a href="{{content.instagram_link}}" class="btn btn-primary subscribe-btn">Subscribe Now</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+	
+{% if content.message %}
+<section class="flex flex-col items-center p-8 lg:p-16">
+    <div class="text-center">
+      <h2 class="text-4xl font-bold text-pink-400 zigzag-header">About us
+		<svg class="zigzag-line" viewBox="0 0 200 20" preserveAspectRatio="xMidYMid meet">
+        <path class="zigzag-path" d="M0,10 L20,2 L40,10 L60,2 L80,10 L100,2 L120,10 L140,2 L160,10 L180,2 L200,10"/>
+		</svg>
+	</h2>
+    </div>
+
+    <div class="card shadow-xl transition-shadow p-6 rounded-lg w-full lg:max-w-4xl mb-8">
+      <div class="mb-4">{{content.message|safe}}</div>
+	  <div>
+		<button class="btn btn-primary w-full lg:w-auto" id="contactBtn">Contact us</button>
+	  </div>
+    </div>
+{% endif %}
+
+    <div class="grid gap-6 lg:grid-cols-2 w-full lg:max-w-4xl">
+	
+      <!-- By the Numbers -->
+      <div class="card shadow-xl hover:shadow-2xl transition-shadow p-6 rounded-lg text-center">
+        <p class="text-pink-500 font-semibold mb-2">BY THE NUMBERS</p>
+        <h2 class="text-3xl font-bold counter" data-target="{{content.stats.subscribers}}" data-duration="6000"></h2><!--data-duration=6000 means 6secs-->
+        <p class="text-pink-500 ">Subscribers</p>
+        <h2 class="text-3xl font-bold mt-4 counter" data-target="{{content.stats.views}}" data-duration="6000"></h2>
+        <p class="text-pink-500 ">Views</p>
+        <h2 class="text-3xl font-bold mt-4 counter" data-target="{{content.stats.engagement}}" data-duration="6000"></h2>
+        <p class="text-pink-500 ">% Engagement</p>
+      </div>
+
+	{% comment %}
+      <!-- Our Community -->
+      <div class="card shadow-xl hover:shadow-2xl transition-shadow p-6 rounded-lg text-center">
+        <p class="text-pink-500 font-semibold mb-2">OUR COMMUNITY</p>
+        <p class="font-semibold">📍 Greenville, North Carolina</p>
+        <p class="text-sm mt-2 mb-4">Excellent affordability featuring cultural, educational, and medical amenities</p>
+        <img src="https://via.placeholder.com/150x100.png?text=Greenville+Map" alt="Greenville Map" class="mx-auto rounded-lg">
+      </div>
+	  {% endcomment %}
+	  
+	</div>
+</section>
+
+{% if content.perks %}
+	<section>
+      <!-- Awesome Perks -->
+      <div class=" p-6">
+		
+		<div class="container mx-auto py-14 px-4">
+        <h2 class="text-4xl font-bold text-center mb-12 text-pink-500 font-semibold mb-2 zigzag-header">Why work with us?
+			<svg class="zigzag-line" viewBox="0 0 200 20" preserveAspectRatio="xMidYMid meet">
+				<path class="zigzag-path" d="M0,10 L20,2 L40,10 L60,2 L80,10 L100,2 L120,10 L140,2 L160,10 L180,2 L200,10"/>
+			</svg>
+		</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Destination Card 1 -->
+			{% for perk in content.perks.all %}
+				<div class="card shadow-xl hover:shadow-2xl transition-shadow duration-300 perk-card">
+					<div class="card-body">
+						<h2 class="card-title text-2xl">
+							<div></div>
+							<div>{{perk.perk}}</div>
+						</h2>
+					</div>
+				</div>
+			{% endfor %}
+        </div>
+    </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+        
+		
+		
+	{% if creator_contents %}
+	 <!-- New Image Gallery Section -->
+    <section class="py-10">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-pink-400 zigzag-header">Latest Content
+				<svg class="zigzag-line" viewBox="0 0 200 20" preserveAspectRatio="xMidYMid meet">
+					<path class="zigzag-path" d="M0,10 L20,2 L40,10 L60,2 L80,10 L100,2 L120,10 L140,2 L160,10 L180,2 L200,10"/>
+				</svg>
+			</h2>
+            
+            <!-- Carousel Container -->
+            <div class="relative">
+                <!-- Scroll Buttons -->
+                <button class="btn btn-circle btn-primary absolute left-0 top-1/2 transform -translate-y-1/2 z-10" onclick="document.getElementById('gallery-scroll').scrollBy({left: -300, behavior: 'smooth'})">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="btn btn-circle btn-primary absolute right-0 top-1/2 transform -translate-y-1/2 z-10" onclick="document.getElementById('gallery-scroll').scrollBy({left: 300, behavior: 'smooth'})">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Scrollable Gallery -->
+                <div id="gallery-scroll" class="flex overflow-x-auto gap-4 py-8 px-12 snap-x scrollbar-hide" style="scroll-behavior: smooth;">
+                    <!-- Individual Images -->
+					{% for content in creator_contents %}
+						{% if content.youtube_video_link.youtube_link %}
+						<div class="flex-none w-64 snap-center">
+							<div class="max-w-4xl mx-auto">
+							<!-- Video Container -->
+								<div class="relative w-full pb-[56.25%] bg-gray-100 rounded-lg overflow-hidden">
+									<iframe  width="420" height="515" class="top-0 left-0 w-full h-full" src="{{content.youtube_video_link.youtube_link}}?rel=0&modestbranding=1" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+								</div>
+							</div>
+						</div>
+						{% elif content.youtube_video_link.youtube_code %}
+						<div class="flex-none w-64 snap-center">
+							<div class="max-w-4xl mx-auto">
+							<!-- Video Container -->
+								<div class="relative w-full pb-[56.25%] bg-gray-100 rounded-lg overflow-hidden">
+									<iframe class="top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/{{content.youtube_video_link.youtube_code}}?rel=0&modestbranding=1" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+								</div>
+							</div>
+						</div>
+						{% else %}
+							<div class="flex-none w-64 snap-center">
+								<div class="card shadow-xl">
+									<figure class="px-4 pt-4">
+										<img src="{{content.image.url}}" alt="Book Cover 1" class="rounded-xl shadow-lg" />
+									</figure>
+									<div class="card-body p-4">
+										<h3 class="card-title text-sm">{{content.title}}</h3>
+										<p>{{content.description}}</p>
+										{% comment %}
+										<div class="card-actions justify-end">
+											<button class="btn btn-primary">Learn More</button>
+										</div>
+										{% endcomment %}
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+	{% endif %}
+	
+	{% if works %}
+	<h2 class="text-3xl font-bold text-center mb-8 text-pink-400 zigzag-header">What people are saying
+		<svg class="zigzag-line" viewBox="0 0 200 20" preserveAspectRatio="xMidYMid meet">
+			<path class="zigzag-path" d="M0,10 L20,2 L40,10 L60,2 L80,10 L100,2 L120,10 L140,2 L160,10 L180,2 L200,10"/>
+		</svg>
+	</h2>
+	
+	<!-- First section - Right to Left -->
+    <div class="review-section" id="section1">
+        <div class="review-container scroll-left">
+            <!-- Original set -->
+			{% for work in works %}
+            <div class="review-card">
+                <div class="user-info">
+                    
+                    <div>
+                        {% if work.name %}<div class="user-name">{{work.name}}</div>{% else %}<div class="user-name">{{work.client}}</div>{% endif %}
+                        <div class="rating">{{work.get_ratings_display}}</div>
+                    </div>
+                </div>
+                <p class="review-text">{{work.review}}</p>
+            </div>
+			{% endfor %}
+        </div>
+    </div>
+
+    <!-- Second section - Left to Right -->
+    <div class="review-section" id="section2">
+        <div class="review-container scroll-right">
+            {% for work in works %}
+            <div class="review-card">
+                <div class="user-info">
+                    <div class="avatar"></div>
+                    <div>
+                        {% if work.name %}<div class="user-name">{{work.name}}</div>{% else %}<div class="user-name">{{work.client}}</div>{% endif %}
+                        <div class="rating">{{work.get_ratings_display}}</div>
+                    </div>
+                </div>
+                <p class="review-text">{{work.review}}</p>
+            </div>
+			{% endfor %}
+        </div>
+    </div>
+	{% endif %}
+
+	{% if faqs %}
+    <!-- FAQ Section -->
+    <div class=" py-12">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8 text-pink-400 zigzag-header">Frequently Asked Questions
+				<svg class="zigzag-line" viewBox="0 0 200 20" preserveAspectRatio="xMidYMid meet">
+					<path class="zigzag-path" d="M0,10 L20,2 L40,10 L60,2 L80,10 L100,2 L120,10 L140,2 L160,10 L180,2 L200,10"/>
+				</svg>
+			</h2>
+            <div class="join join-vertical w-full">
+			{% for faq in faqs %}
+                <div class="collapse collapse-arrow join-item border border-base-300">
+                    <input type="radio" name="my-accordion-4" checked="checked" /> 
+                    <div class="collapse-title text-xl font-medium">
+                        {{faq.question}}
+                    </div>
+                    <div class="collapse-content">
+                        <p>{{faq.answer}}</p>
+                    </div>
+                </div>
+			{% endfor %}
+            </div>
+        </div>
+    </div>
+	{% endif %}
+	
+	
+	{% include 'contact_form.html' %}
+
+{% endblock page_content %}
+

@@ -1,0 +1,71 @@
+<!--Contact Form-->
+<div class="container mx-auto px-4 py-12">
+		<h2 class="text-3xl font-bold text-center mb-8 text-pink-400 zigzag-header">Get in Touch
+			<svg class="zigzag-line" viewBox="0 0 200 20" preserveAspectRatio="xMidYMid meet">
+				<path class="zigzag-path" d="M0,10 L20,2 L40,10 L60,2 L80,10 L100,2 L120,10 L140,2 L160,10 L180,2 L200,10"/>
+			</svg>
+		</h2>
+        <div id="form-container" class="card bg-base-100 shadow-xl max-w-2xl mx-auto">
+            <div class="card-body" id="form-section">
+                <form class="space-y-4" id="contact-form" method="post">
+					{% csrf_token %}
+					{% for field in form %}
+					{% if field.errors %}
+						<div class="alert alert-danger">
+							<strong>{{ field.errors}}</strong>
+						</div>
+					{% endif %}
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">
+									{{ field.label_tag }} 
+										{% if field.field.required %}
+											<span style="color: red;">*</span>
+										{% endif %}
+								</span>
+							</label>
+							{{field}}
+						</div>
+					{% endfor %}
+					<div class="form-control mt-6">
+                        <button type="submit" class="btn btn-pink-400">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+	
+<script>
+document.addEventListener('DOMContentLoaded', () => {    
+    const form = document.getElementById('contact-form');
+    const formContainer = document.getElementById('form-container');
+    const formSection = document.getElementById('form-section');
+	
+	form.addEventListener('submit', async function(event) {
+		event.preventDefault();
+		const formData = new FormData(form);
+		
+		try {
+			const response = await fetch('/', {
+				method: 'POST',
+				body: formData,
+				headers: {
+					'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+				}
+			});
+			if (response.ok) {
+				formSection.innerHTML = '<h2 class="text-center text-3xl"><i class="mb-8 fas fa-home"></i><br>Thank you, your entries have been received.</h2>';
+				formContainer.classList.remove('bg-base-100')
+			} else {
+			alert('Something went wrong. Please try again.');
+			}
+		}
+		catch (error)
+			{
+			console.error('Error:', error);
+			alert('An error occured while submitting the form.');
+			}
+		});
+	});
+</script>
+

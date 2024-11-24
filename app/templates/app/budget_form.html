@@ -1,0 +1,70 @@
+{% extends 'header.html' %}
+
+{% block extra_css %}
+	.filter-section {
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+	.filter-content {
+            padding: 15px;
+        }
+        .filter-content.active {
+            display: block;
+        }
+	.language-btn {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .language-btn.selected {
+            background-color: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+{% endblock extra_css %}
+
+{% block page_content %}
+
+<div class="p-6 grid gap-6 lg:grid-cols-2 w-full lg:max-w-4xl">
+<form class="" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{% for field in form %}
+		{% if field.errors %}
+			<div class="alert alert-danger">
+				<strong>{{ field.errors}}</strong>
+			</div>
+		{% endif %}
+			<div class="my-3">
+			 <label class="label">
+            <span class="label-text">
+				{% if field.field.required %}
+					<span style="color: red;">*</span>
+				{% endif %}
+				{{ field.label_tag }}
+			</span>
+          </label>
+		  {{field}}
+		 </div>
+	{% endfor %}
+	
+	<div class="filter-content">
+                <div id="languageButtons" class="language-container">
+                    <button class="language-btn" data-lang="en">English</button>
+                    <button class="language-btn" data-lang="es">Spanish</button>
+                    <button class="language-btn" data-lang="fr">French</button>
+                    <button class="language-btn" data-lang="de">German</button>
+                    <button class="language-btn" data-lang="ja">Japanese</button>
+                </div>
+            </div>
+		
+  <button type="submit" class="btn btn-primary">Calculate</button>
+
+  
+</form>
+</div>
+
+{% endblock page_content %}
