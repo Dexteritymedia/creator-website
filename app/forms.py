@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import Category, Contact, WorkHistory
+from .models import Activity, Category, Contact, WorkHistory
 
 class BudgetForm(forms.Form):
     budget = forms.DecimalField(label="Enter your budget", max_digits=10, decimal_places=2, widget=forms.NumberInput(attrs={"placeholder":"e.g., 20000", "class":"input input-bordered w-full"}))
     categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all().exclude(name='Stay'), widget=forms.CheckboxSelectMultiple())
-    include_accommodation = forms.BooleanField(required=False, label="Include Accommodation", widget=forms.CheckboxInput())
+    #include_accommodation = forms.BooleanField(required=False, label="Include Accommodation", widget=forms.CheckboxInput())
 
 
 class ContactForm(forms.ModelForm):
@@ -36,4 +36,8 @@ class WorkHistoryForm(forms.ModelForm):
         exclude = ['accept']
 
 
+class ActivityForm(forms.ModelForm):
+    class Meta:
+        model = Activity
+        fields = '__all__'
 

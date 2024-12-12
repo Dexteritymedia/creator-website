@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/daisyui/4.4.19/full.css" rel="stylesheet">
+	<!--PWA configuration-->
+	<meta name="theme-color" content="#000000">
+	<link rel="manifest" href="{% static 'manifest.json' %}">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap" rel="stylesheet">
+	<script src="https://unpkg.com/htmx.org@1.9.5" integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO" crossorigin="anonymous"></script>
     <title>{{content.creator}} - {{content.tagline|safe}}</title>
 	<link href="{% static 'src/style.css' %}" rel="stylesheet">
+	<link href="{% static 'src/output.css' %}" rel="stylesheet">
+	<script src="https://cdn.jsdeliver.net/npm/daisyui@latest/dist/full.js"></script>
     <style>
 		html {
 			font-family: "Poppins",Sofia Sans,;
@@ -53,6 +57,25 @@
         transition: transform 0.3s ease;
     }
 	
+	#a2hs-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ec4899;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#a2hs-button:hover {
+  background-color: #0056b3;
+}
+	
 		{% block extra_css %}
 		{% endblock extra_css %}
 	</style>
@@ -67,6 +90,10 @@
       <span></span>
     </div>
   </div>
+  
+  <button id="a2hs-button"  style="display: none;" class="admin-link" title="Add to Home Screen">
+    <i class="fas fa-home"></i>Add to Home Screen
+</button>
   
 <!-- Add theme toggle button before closing body tag -->
 <button class="theme-toggle" id="themeToggle" title="Toggle theme">
@@ -106,6 +133,64 @@
             </div>
         </div>
     </footer>
+	
+	<!--PWA configuration-->
+	<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
+      .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(error => {
+        console.error('Service Worker registration failed:', error);
+      });
+  }
+  
+  // Declare a variable to hold the deferred prompt
+let deferredPrompt;
+
+// Wait for the `beforeinstallprompt` event
+window.addEventListener('beforeinstallprompt', (event) => {
+  // Prevent the default mini-infobar from appearing
+  event.preventDefault();
+
+  // Save the event for triggering it later
+  deferredPrompt = event;
+
+  // Show the custom "Add to Home Screen" button or banner
+  const a2hsButton = document.getElementById('a2hs-button');
+  a2hsButton.style.display = 'block';
+
+  // Add a click event listener to the button
+  a2hsButton.addEventListener('click', () => {
+    // Hide the A2HS button after the user clicks it
+    a2hsButton.style.display = 'none';
+
+    // Show the A2HS prompt
+    deferredPrompt.prompt();
+
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt');
+      } else {
+        console.log('User dismissed the A2HS prompt');
+      }
+
+      // Clear the deferred prompt variable
+      deferredPrompt = null;
+    });
+  });
+});
+
+// Listen for the `appinstalled` event to detect when the app is installed
+window.addEventListener('appinstalled', () => {
+  console.log('PWA was installed');
+  // Optionally hide the A2HS button if it is still visible
+  const a2hsButton = document.getElementById('a2hs-button');
+  a2hsButton.style.display = 'none';
+});
+</script>
 
 	<script>
 	document.addEventListener('DOMContentLoaded', () => {

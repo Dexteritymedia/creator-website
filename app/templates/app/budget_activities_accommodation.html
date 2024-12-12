@@ -5,15 +5,15 @@
 {% block page_content %}
 <div class="container text-center">
 	<h1 class="text-4xl font-bold mb-12 text-pink-500 font-semibold mb-2">Activities within your Budget</h1>
-	<p>Total Budget: {{form.cleaned_data.budget}}</p>
-	<p>Total cost of Selected Activities: {{total_cost}}</p>
+	<p>Total Budget: ${{form.cleaned_data.budget}}</p>
+	<p>Total cost of Selected Activities: ${{total_cost}}</p>
 </div>
 
 {% if accommodation_activities %}
 	<h3>Accommodation/Hotels</h3>
 	<section class="py-10">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 text-pink-400 zigzag-header">Latest Content
+            <h2 class="text-4xl font-bold text-center mb-12 text-pink-400 zigzag-header">
 				<svg class="zigzag-line" viewBox="0 0 200 20" preserveAspectRatio="xMidYMid meet">
 					<path class="zigzag-path" d="M0,10 L20,2 L40,10 L60,2 L80,10 L100,2 L120,10 L140,2 L160,10 L180,2 L200,10"/>
 				</svg>
@@ -59,11 +59,11 @@
 	
 {% elif activities %}
 
-    <section class="py-10">
-      <div class=" p-6">
-		<div class="container mx-auto py-14 px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <section class="flex">
+		<div class="container">
+        <div class="grid gap-6 lg:grid-cols-2 w-full lg:max-w-4xl">
             <!-- Destination Card 1 -->
+			<div>
 			{% for activity in activities %}
 				<div class="card shadow-xl hover:shadow-2xl transition-shadow duration-300 perk-card">
 								{% if activity.pic %}
@@ -72,24 +72,46 @@
 									</figure>
 								{% else %}
 									<figure class="px-4 pt-4">
-										<img src="{% static 'images/placeholder.png' %}" alt="Book Cover 1" class="rounded-xl shadow-lg" />
+										<img src="https://fakeimg.pl/600x400?text=No+Image+available" alt="Book Cover 1" class="rounded-xl shadow-lg" />
 									</figure>
 								{% endif %}
 									<div class="card-body p-4">
 										<h3 class="card-title text-2xl">{{activity.name}}</h3>
 										<p>{{activity.description}}</p>
+										<p>{{activity.category.name}}</p>
 										<div class="text-4xl card-actions">
-											<button class="btn btn-primary">{{activity.cost}}</button>
+											<button class="btn btn-primary">${{activity.cost}}</button>
 										</div>
 									</div>
 								</div>
 			{% endfor %}
-        </div>
+			</div>
+			
+			<!--Map-->
+			<div id="map" class="rounded-lg text-center h-screen sticky top-0 hidden sm:block">
+				 {{map|safe}}
+			</div>
+			
+			<!-- Map Button for Smaller Screens -->
+<button id="map-toggle" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white p-3 rounded-full shadow-lg sm:hidden">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A2 2 0 013 15.382V8.618a2 2 0 011.553-1.894L9 4m0 16l5.447-2.724a2 2 0 011.106 0L21 20m-6-4V4m-6 16V4m6 0L9 4m0 16l5.447-2.724M9 20l5.447-2.724" />
+    </svg> View map
+</button>
+
+<!-- Fullscreen Map Overlay -->
+<div id="map-overlay" class="fixed inset-0 bg-white z-50 hidden">
+    <button id="close-map" class="absolute top-4 right-4 bg-red-600 text-white p-2 rounded-full shadow-lg">
+        Close Map
+    </button>
+    <div class="w-full h-full">
+        {{ map|safe }}
     </div>
-      </div>
+</div>
+	  
+	</div>
     </div>
-  </section>
-	
+  </section>	
 {% else %}
 	<p>No Activities found within your budget.</p>
 {% endif %}
@@ -97,6 +119,28 @@
 {% if user.is_authenticated %}
 	<button type="submit" name="save" class="btn btn-success">Save Budget</button>
 	<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="btn btn-primary">Share on Facebook</a>
-  {% endif %}
+ {% endif %}
 
 {% endblock page_content %}
+
+{% block extra_js %}
+	// JavaScript for toggling the map overlay
+    const mapToggle = document.getElementById('map-toggle');
+    const mapOverlay = document.getElementById('map-overlay');
+    const closeMap = document.getElementById('close-map');
+
+    mapToggle.addEventListener('click', () => {
+        mapOverlay.classList.remove('hidden');
+    });
+
+    closeMap.addEventListener('click', () => {
+        mapOverlay.classList.add('hidden');
+    });
+	
+	const closeDesktopMap = document.getElementById('close-desktop-map')
+	const desktopMap = document.getElementById('desktop-map')
+	
+	closeDesktopMap.addEventListener('click', () => {
+		desktopMap.classList.add('hidden');
+	});
+ {% endblock extra_js %}

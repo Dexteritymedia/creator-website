@@ -1,0 +1,8 @@
+Matches {{activities|length}} / {{ count }} activities in the directory.
+{% for activity in activities %}
+	<a href="">
+		<p>{{ activity.name }}</p>
+		<p>{{ activity.description }}</p>
+	</a>
+	<hr/>
+{% endfor %}
